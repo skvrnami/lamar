@@ -1,0 +1,4 @@
+Name: Ollama Chat
+Description: Opens Ollama chat
+Binding: chat
+Interactive: true

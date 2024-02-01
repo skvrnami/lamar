@@ -1,0 +1,71 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# lamar
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of lamar is to provide an access to [Ollama](https://ollama.ai/) in R.
+
+## Installation
+
+You can install the development version of lamar like so:
+
+``` r
+devtools::install_github("skvrnami/lamar")
+```
+
+You also need to download Ollama and a language model you want to use. For more information, check [this link](https://github.com/ollama/ollama).
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+### Set up
+```{r, eval=FALSE}
+library(reticulate)
+use_miniconda("/Users/skvrnami/miniconda3/bin/python")
+
+lamar::install_ollama() # installs python ollama package
+```
+
+### Chat
+```{r}
+library(lamar)
+
+r1 <- ollama_chat(ollama, "mistral", "Let's play a game. You will think of a number between 0-100 and the user will try to guess it. After each guess, tell the user if your number is higher, lower or I guessed correctly.", return_all = TRUE)
+
+cat(r1$message$content)
+
+r2 <- ollama_chat(ollama, "mistral", "Is it higher than 50?",
+                  previous_messages = r1,
+                  return_all = TRUE)
+
+cat(r2$message$content)
+
+r3 <- ollama_chat(ollama, "mistral", "Is it higher than 75?",
+                  previous_messages = r2, return_all = TRUE)
+
+cat(r3$message$content)
+```
+
+### Generate
+```{r}
+
+g1 <- ollama_generate(ollama, "mistral", "write a R function that takes as an input a name of a person and says Hello to the person on output")
+cat(g1)
+```
+
